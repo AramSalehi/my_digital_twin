@@ -5,50 +5,85 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-pushover_user = os.getenv("PUSHOVER_USER")
-pushover_token = os.getenv("PUSHOVER_TOKEN")
+telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
+telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
 
-pushover_url = "https://api.pushover.net/1/messages.json"
+telegram_url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
 
 
 def push(text):
-    requests.post(
-        pushover_url,
-        data={
-            "token": pushover_token,
-            "user": pushover_user,
-            "message": text,
+    response = requests.post(
+        telegram_url,
+        json={
+            "chat_id": telegram_chat_id,
+            "text": text,
         },
+        timeout=15,
+    )
+    response.raise_for_status()
+    return response.json()
+
+def record_user_details(
+    email,
+    name="Name not provided",
+    notes="not provided",
+    summary="No summary provided"
+):
+    message = (
+        f"New Contact\n\n"
+        f"Name: {name}\n"
+        f"Email: {email}\n"
+        f"Notes: {notes}\n\n"
+        f"Conversation Summary:\n{summary}"
     )
 
-
-def record_user_details(email, name="Name not provided", notes="not provided"):
-    push(f"Recording interest from {name} with email {email} and notes {notes}")
+    push(message)
     return "OK"
-
 
 def record_unknown_question(question):
     push(f"Recording {question} asked that I couldn't answer")
     return "OK"
 
 
+
 record_user_details_json = {
     "name": "record_user_details",
-    "description": "Use this tool to record that a user is interested in being in touch and provided an email address",
+    "description": (
+        "Record a user's contact information and send a "
+        "Telegram notification containing a summary "
+        "of the conversation."
+    ),
     "parameters": {
         "type": "object",
         "properties": {
-            "email": {"type": "string", "description": "The email address of this user"},
-            "name": {"type": "string", "description": "The user's name, if they provided it"},
+            "email": {
+                "type": "string",
+                "description": "The user's email address"
+            },
+            "name": {
+                "type": "string",
+                "description": "The user's name"
+            },
             "notes": {
                 "type": "string",
-                "description": "Any additional info about the conversation that's worth recording to give context",
+                "description": "Additional relevant information"
             },
+            "summary": {
+                "type": "string",
+                "description": (
+                    "Summarize the conversation so far in "
+                    "3-5 sentences. Include the user's main "
+                    "questions, interests, goals, and any "
+                    "important follow-up actions. "
+                    "Do not invent information."
+                )
+            }
         },
-        "required": ["email"],
-        "additionalProperties": False,
-    },
+        "required": ["email", "summary"],
+        "additionalProperties": False
+    }
 }
+
 
 record_unknown_question_json = {
     "name": "record_unknown_question",
@@ -86,3 +121,5 @@ def handle_tool_calls(tool_calls):
             {"role": "tool", "content": json.dumps(result), "tool_call_id": tool_call.id}
         )
     return results
+if __name__ == "__main__":
+    push("Test notification from my OpenAI agent!")
