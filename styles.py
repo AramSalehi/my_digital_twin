@@ -1,4 +1,4 @@
-"""Styling constants for the digital twin Gradio app."""
+"""Professional responsive styling for the Gradio Digital Twin application."""
 
 GOLD = "#ecad0a"
 BLUE = "#209dd7"
@@ -12,358 +12,236 @@ EXAMPLES = [
 ]
 
 CSS = """
-:root {
+/* Brand and theme tokens */
+:root, body.dark {
   --twin-gold: #ecad0a;
   --twin-blue: #209dd7;
-  --twin-purple: #753991;
-  --twin-bg: #0d0d10;
-  --twin-surface: #16161b;
-  --twin-surface-2: #1c1c22;
-  --twin-border: #2a2a32;
-  --twin-border-strong: #3a3a44;
-  --twin-text: #ececef;
-  --twin-muted: #8c8c95;
+  --twin-purple: #a78bfa;
+  --twin-bg: #0b1019;
+  --twin-surface: #121b2a;
+  --twin-surface-2: #1b283a;
+  --twin-border: #2a384b;
+  --twin-text: #edf2f9;
+  --twin-muted: #a0adbf;
+  --twin-shadow: 0 14px 48px rgba(0,0,0,.22);
 }
-
-/* Light mode: Gradio adds `.dark` to <body> when dark; absence = light.
-   Only the neutral palette flips — gold/blue/purple accents stay identical. */
 body:not(.dark) {
-  --twin-bg: #f4f4f6;
+  --twin-bg: #f5f7fb;
   --twin-surface: #ffffff;
-  --twin-surface-2: #ededf0;
-  --twin-border: #dcdce2;
-  --twin-border-strong: #b8b8c0;
-  --twin-text: #1a1a20;
-  --twin-muted: #6a6a72;
+  --twin-surface-2: #edf2f8;
+  --twin-border: #dce4ee;
+  --twin-text: #172234;
+  --twin-muted: #627187;
+  --twin-shadow: 0 12px 36px rgba(32,52,80,.07);
 }
-
-footer, .built-with, .show-api, .api-docs { display: none !important; }
-
 html, body, gradio-app { background: var(--twin-bg) !important; }
-
-/* ---------- Stable layout ---------- */
+footer, .built-with, .show-api, .api-docs { display: none !important; }
 .gradio-container {
-  background: var(--twin-bg) !important;
-  color: var(--twin-text) !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   width: 100% !important;
-  max-width: 880px !important;
-  min-width: 0 !important;
+  max-width: 980px !important;
   margin: 0 auto !important;
-  padding: 32px 24px 48px !important;
+  padding: 38px 28px 56px !important;
+  background: transparent !important;
+  color: var(--twin-text) !important;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif !important;
 }
-.gradio-container .main, .gradio-container .contain, .gradio-container .wrap {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
+.gradio-container *, .gradio-container *::before, .gradio-container *::after {
+  box-sizing: border-box;
 }
-.gradio-container * { min-width: 0; }
-
-/* ---------- Title ---------- */
 .gradio-container h1 {
   color: var(--twin-text) !important;
-  font-size: 26px !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.02em !important;
-  border-left: 3px solid var(--twin-gold);
-  padding-left: 12px !important;
-  margin: 4px 0 8px !important;
-  text-align: left !important;
+  font-size: clamp(25px, 3vw, 36px) !important;
+  line-height: 1.18 !important;
+  letter-spacing: -.045em !important;
+  font-weight: 750 !important;
+  margin: 4px 0 14px !important;
 }
-
-/* ---------- Sharp corners on structural pieces ---------- */
-.chatbot, .chatbot *, .block, .form,
-button, input, textarea,
-.examples button {
-  border-radius: 0 !important;
+.gradio-container h1::before {
+  content: ''; display: inline-block; width: 9px; height: 9px;
+  border-radius: 50%; background: var(--twin-gold);
+  margin-right: 12px; vertical-align: middle;
+  box-shadow: 0 0 0 5px rgba(236,173,10,.10);
 }
-
-/* ---------- Block surfaces ---------- */
-.block, .form { background: transparent !important; box-shadow: none !important; }
-
-/* ---------- Hide the Chatbot label / header strip ---------- */
-.chatbot > .block-label,
-.chatbot > label,
-.chatbot .label-wrap,
-.chatbot .block-label,
-.chatbot > .label-container {
-  display: none !important;
+.gradio-container .main, .gradio-container .contain, .gradio-container .wrap {
+  max-width: 100% !important; min-width: 0 !important;
 }
-
-/* ---------- Chatbot frame ---------- */
-.chatbot, .chatbot.block {
+.gradio-container .block, .gradio-container .form {
+  box-shadow: none !important;
+}
+/* Conversation surface */
+.gradio-container .chatbot,
+.gradio-container .chatbot.block {
   background: var(--twin-surface) !important;
   border: 1px solid var(--twin-border) !important;
+  border-radius: 20px !important;
   min-height: 460px !important;
-  box-shadow: none !important;
+  box-shadow: var(--twin-shadow) !important;
+  overflow: hidden;
 }
-.chatbot .placeholder, .chatbot .placeholder * { color: var(--twin-muted) !important; }
-
-/* ---------- Message rows: strip parent backgrounds ---------- */
-.message-row,
-.message-row > div,
-.message-row .role,
-.message-wrap, .bubble-wrap {
+.gradio-container .chatbot > .block-label,
+.gradio-container .chatbot > label,
+.gradio-container .chatbot .label-wrap,
+.gradio-container .chatbot .block-label,
+.gradio-container .chatbot > .label-container { display: none !important; }
+.gradio-container .chatbot .placeholder,
+.gradio-container .chatbot .placeholder * { color: var(--twin-muted) !important; }
+/* Message styling: keep markdown, code and links intact */
+.gradio-container .message-row,
+.gradio-container .message-wrap,
+.gradio-container .bubble-wrap {
   background: transparent !important;
-  border: 0 !important;
   box-shadow: none !important;
 }
-
-/* ---------- Reset borders on every bubble variant first ---------- */
-.message-row .message,
-.message-row .message-bubble,
-.message-row .bubble {
-  border: 0 !important;
+.gradio-container .message-row .message,
+.gradio-container .message-row .message-bubble,
+.gradio-container .message-row .bubble {
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  padding: 12px 16px !important;
+  border-radius: 16px !important;
   box-shadow: none !important;
-  padding: 6px 10px !important;
+  max-width: 100%;
 }
-
-/* ---------- Bubble backgrounds (broad to cover Gradio variants) ---------- */
-.message-row.user-row .message,
-.message-row.user-row .message-bubble,
-.message-row.user-row .bubble,
-.message-row[data-role="user"] .message,
-.message-row[data-role="user"] .message-bubble {
-  background: var(--twin-blue) !important;
-  color: #ffffff !important;
+.gradio-container .message-row.user-row .message,
+.gradio-container .message-row.user-row .message-bubble,
+.gradio-container .message-row.user-row .bubble,
+.gradio-container .message-row[data-role="user"] .message,
+.gradio-container .message-row[data-role="user"] .message-bubble {
+  background: #246b9a !important;
+  color: #fff !important;
+  border: 1px solid #367da9 !important;
+  border-bottom-right-radius: 5px !important;
 }
-
-.message-row.bot-row .message,
-.message-row.bot-row .message-bubble,
-.message-row.bot-row .bubble,
-.message-row[data-role="assistant"] .message,
-.message-row[data-role="assistant"] .message-bubble {
+.gradio-container .message-row.bot-row .message,
+.gradio-container .message-row.bot-row .message-bubble,
+.gradio-container .message-row.bot-row .bubble,
+.gradio-container .message-row[data-role="assistant"] .message,
+.gradio-container .message-row[data-role="assistant"] .message-bubble {
   background: var(--twin-surface-2) !important;
   color: var(--twin-text) !important;
+  border: 1px solid var(--twin-border) !important;
+  border-bottom-left-radius: 5px !important;
 }
-
-/* ---------- Purple stripe ----------
-   Apply to every common bubble class for assistant rows (we don't know which
-   one the running Gradio uses), then suppress on any *nested* instance so the
-   stripe lands on the outermost matching element only — exactly one stripe. */
-.message-row.bot-row .message,
-.message-row.bot-row .bubble,
-.message-row.bot-row .message-bubble,
-.message-row[data-role="assistant"] .message,
-.message-row[data-role="assistant"] .bubble,
-.message-row[data-role="assistant"] .message-bubble {
-  border-left: 2px solid var(--twin-purple) !important;
-}
-
-.message-row.bot-row .message .message,
-.message-row.bot-row .message .bubble,
-.message-row.bot-row .message .message-bubble,
-.message-row.bot-row .bubble .message,
-.message-row.bot-row .bubble .bubble,
-.message-row.bot-row .bubble .message-bubble,
-.message-row.bot-row .message-bubble .message,
-.message-row.bot-row .message-bubble .bubble,
-.message-row.bot-row .message-bubble .message-bubble,
-.message-row[data-role="assistant"] .message .message,
-.message-row[data-role="assistant"] .message .bubble,
-.message-row[data-role="assistant"] .message .message-bubble,
-.message-row[data-role="assistant"] .bubble .message,
-.message-row[data-role="assistant"] .bubble .bubble,
-.message-row[data-role="assistant"] .bubble .message-bubble,
-.message-row[data-role="assistant"] .message-bubble .message,
-.message-row[data-role="assistant"] .message-bubble .bubble,
-.message-row[data-role="assistant"] .message-bubble .message-bubble {
-  border-left: 0 !important;
-}
-
-/* ---------- Uniform font size in bubbles ----------
-   The "first paragraph different size" was caused by a leaky `.prose p:first-of-type`
-   selector. Force every paragraph in a bubble to the same size. */
-.message-row .message,
-.message-row .message-bubble,
-.message-row .bubble {
+.gradio-container .message-row .prose p,
+.gradio-container .message-row .message p,
+.gradio-container .message-row .message-bubble p {
   font-size: 14px !important;
-  line-height: 1.55 !important;
-}
-.message-row .message p,
-.message-row .message-bubble p,
-.message-row .bubble p,
-.message-row .prose p {
-  font-size: 14px !important;
-  line-height: 1.55 !important;
-  margin: 0 0 8px !important;
+  line-height: 1.65 !important;
+  margin: 0 0 10px !important;
   color: inherit !important;
 }
-.message-row .message p:last-child,
-.message-row .message-bubble p:last-child,
-.message-row .bubble p:last-child,
-.message-row .prose p:last-child { margin-bottom: 0 !important; }
-
-/* Strip stray internal borders/backgrounds from anything inside a bubble */
-.message-row .message *,
-.message-row .message-bubble *,
-.message-row .bubble * {
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  color: inherit !important;
+.gradio-container .message-row .prose p:last-child,
+.gradio-container .message-row .message p:last-child,
+.gradio-container .message-row .message-bubble p:last-child { margin-bottom: 0 !important; }
+.gradio-container .message-row a { color: var(--twin-blue) !important; text-underline-offset: 3px; }
+.gradio-container .message-row.user-row a,
+.gradio-container .message-row[data-role="user"] a { color: #fff !important; }
+.gradio-container .message-row pre {
+  overflow-x: auto; border-radius: 10px; padding: 12px;
 }
-.message-row .message a,
-.message-row .message-bubble a {
-  color: var(--twin-gold) !important;
-  text-decoration: underline;
-}
-
-/* ---------- Input row alignment ---------- */
-.input-row,
-.gr-input-row,
-.chat-input-row,
-form[class*="input"] { align-items: stretch !important; }
-
-textarea, input[type="text"] {
+/* Composer */
+.gradio-container textarea,
+.gradio-container input[type="text"] {
   background: var(--twin-surface) !important;
   border: 1px solid var(--twin-border) !important;
+  border-radius: 14px !important;
   color: var(--twin-text) !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-  font-size: 14px !important;
-  padding: 12px 14px !important;
-  line-height: 1.4 !important;
-  min-height: 48px !important;
+  font: 14px/1.5 Inter, ui-sans-serif, system-ui, sans-serif !important;
+  padding: 13px 15px !important;
+  min-height: 50px !important;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
-textarea:focus, input[type="text"]:focus {
-  border-color: var(--twin-gold) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 1px var(--twin-gold) !important;
-}
-textarea::placeholder, input::placeholder { color: var(--twin-muted) !important; }
-
-/* ---------- Buttons ---------- */
-button {
-  font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  border: 1px solid var(--twin-border) !important;
-  background: transparent !important;
-  color: var(--twin-text) !important;
-  padding: 0 16px !important;
-  min-height: 48px !important;
-  align-self: stretch !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
-}
-button:hover { border-color: var(--twin-gold) !important; color: var(--twin-gold) !important; }
-
-button.primary,
-button[variant="primary"],
-button.submit,
-button.submit-button,
-.submit-button,
-button.lg.primary {
-  background: var(--twin-gold) !important;
-  border: 1px solid var(--twin-gold) !important;
-  color: #111111 !important;
-  min-height: 48px !important;
-  align-self: stretch !important;
-  padding: 0 14px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-button.primary:hover,
-button.submit:hover,
-.submit-button:hover,
-button.lg.primary:hover {
-  background: #ffc320 !important;
-  border-color: #ffc320 !important;
-  color: #111111 !important;
-}
-
-/* ---------- Submit-button icon: center vertically and size correctly ---------- */
-button.submit svg,
-button.submit-button svg,
-.submit-button svg,
-button.primary svg,
-button[variant="primary"] svg {
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 auto !important;
-  display: block !important;
-  align-self: center !important;
-  color: #111111 !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
-}
-
-/* ---------- Examples ---------- */
-.examples, .examples-holder, [data-testid="examples"] {
-  background: transparent !important;
-  padding: 0 !important;
-  margin-top: 14px !important;
-}
-.examples table, .examples-table { background: transparent !important; border: 0 !important; }
-.examples button, .example, .examples td button, [data-testid="examples"] button {
-  background: var(--twin-surface) !important;
-  border: 1px solid var(--twin-border) !important;
-  color: var(--twin-text) !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  padding: 10px 14px !important;
-  text-align: left !important;
-  min-height: 0 !important;
-  align-self: auto !important;
-  display: inline-block !important;
-}
-.examples button:hover, .example:hover, [data-testid="examples"] button:hover {
+.gradio-container textarea:focus,
+.gradio-container input[type="text"]:focus {
   border-color: var(--twin-blue) !important;
-  color: var(--twin-blue) !important;
-  background: var(--twin-surface) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(32,157,215,.15) !important;
 }
-
-/* ---------- Icon buttons (clear, retry, copy) ---------- */
-.icon-button, .chatbot .icon-button {
-  color: var(--twin-muted) !important;
+.gradio-container textarea::placeholder,
+.gradio-container input::placeholder { color: var(--twin-muted) !important; }
+/* Buttons */
+.gradio-container button {
+  border-radius: 12px !important;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease !important;
+}
+.gradio-container button:hover { transform: translateY(-1px); }
+.gradio-container button.primary,
+.gradio-container button[variant="primary"],
+.gradio-container button.submit,
+.gradio-container button.submit-button {
+  background: var(--twin-gold) !important;
+  color: #131820 !important;
+  border: 1px solid var(--twin-gold) !important;
+  min-height: 48px !important;
+}
+.gradio-container button.primary:hover,
+.gradio-container button.submit:hover { background: #ffc329 !important; }
+.gradio-container .icon-button,
+.gradio-container .chatbot .icon-button {
+  min-height: 0 !important;
+  padding: 5px !important;
   background: transparent !important;
   border: 0 !important;
-  min-height: 0 !important;
-  align-self: auto !important;
-  padding: 4px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  color: var(--twin-muted) !important;
+  transform: none !important;
 }
-.icon-button:hover, .chatbot .icon-button:hover { color: var(--twin-gold) !important; }
-
-/* ---------- Scrollbar ---------- */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: var(--twin-bg); }
-::-webkit-scrollbar-thumb { background: var(--twin-border-strong); }
-::-webkit-scrollbar-thumb:hover { background: var(--twin-purple); }
-
-/* ---------- Selection ---------- */
-::selection { background: var(--twin-gold); color: #111111; }
-
-/* ---------- Mobile ---------- */
+/* Suggestions */
+.gradio-container .examples,
+.gradio-container .examples-holder,
+.gradio-container [data-testid="examples"] {
+  background: transparent !important;
+  margin-top: 16px !important;
+  padding: 0 !important;
+}
+.gradio-container .examples table,
+.gradio-container .examples-table { border: 0 !important; background: transparent !important; }
+.gradio-container .examples button,
+.gradio-container .example,
+.gradio-container .examples td button,
+.gradio-container [data-testid="examples"] button {
+  display: inline-block !important;
+  background: var(--twin-surface) !important;
+  color: var(--twin-text) !important;
+  border: 1px solid var(--twin-border) !important;
+  border-radius: 12px !important;
+  padding: 12px 15px !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  min-height: 0 !important;
+  box-shadow: 0 3px 12px rgba(0,0,0,.03);
+}
+.gradio-container .examples button:hover,
+.gradio-container .example:hover,
+.gradio-container [data-testid="examples"] button:hover {
+  border-color: var(--twin-blue) !important;
+  background: var(--twin-surface-2) !important;
+}
+/* Scrollbars and accessibility */
+.gradio-container ::-webkit-scrollbar { width: 8px; height: 8px; }
+.gradio-container ::-webkit-scrollbar-thumb { background: var(--twin-border); border-radius: 8px; }
+.gradio-container :focus-visible { outline: 2px solid var(--twin-blue); outline-offset: 2px; }
 @media (max-width: 640px) {
-  .gradio-container { padding: 22px 14px 36px !important; }
-  .gradio-container h1 { font-size: 22px !important; }
+  .gradio-container { padding: 20px 12px 32px !important; }
+  .gradio-container .chatbot { min-height: 390px !important; border-radius: 14px !important; }
+  .gradio-container .message-row .message,
+  .gradio-container .message-row .message-bubble,
+  .gradio-container .message-row .bubble { padding: 10px 12px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gradio-container *, .gradio-container *::before, .gradio-container *::after {
+    transition-duration: .01ms !important; animation-duration: .01ms !important;
+  }
 }
 """
 
 JS = """
 () => {
-  document.title = 'Digital Twin';
-
-  const focusInput = () => {
-    const areas = document.querySelectorAll('textarea');
-    if (areas.length) areas[areas.length - 1].focus();
-  };
-  setTimeout(focusInput, 300);
-
-  // Re-focus the message field whenever Gradio re-enables it
-  // (i.e. after the assistant finishes responding).
+  document.title = 'Digital Twin | AI Portfolio Assistant';
   const watchTextarea = (area) => {
     if (area.dataset.twinWatched) return;
     area.dataset.twinWatched = '1';
@@ -374,9 +252,8 @@ JS = """
       wasDisabled = isDisabled;
     }).observe(area, { attributes: true, attributeFilter: ['disabled', 'readonly'] });
   };
-
   const scan = () => document.querySelectorAll('textarea').forEach(watchTextarea);
-  setTimeout(scan, 500);
+  scan();
   new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
 }
 """
