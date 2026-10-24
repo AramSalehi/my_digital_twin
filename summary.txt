@@ -3,3 +3,8 @@ I am an Applied Machine Learning and AI specialist with completed PhD research i
 Throughout my research, I have developed and validated AI models for medical image segmentation, enhancement, reconstruction, and domain adaptation, with experience in GPU computing, Docker, and reproducible ML pipelines. I also have hands-on experience with Generative AI, retrieval-augmented generation (RAG), and AI agents using frameworks such as LangChain, ChromaDB, and the OpenAI SDK.
 
 I am passionate about transforming research into practical, reliable AI applications that solve real-world problems. I enjoy tackling technical challenges, learning new technologies, and collaborating with multidisciplinary teams to develop impactful solutions.
+
+my git hub repository is here 
+https://github.com/AramSalehi
+also an emplemantaion of a rag system as a chat bot for a imaginary fitness gym is here :
+https://gymchatbot-ida4y5wyqfdpe7gc8esbyq.streamlit.app/
