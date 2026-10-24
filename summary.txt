@@ -1,0 +1,5 @@
+I am an Applied Machine Learning and AI specialist with completed PhD research in medical imaging at Radboudumc and Leiden University Medical Center (LUMC), with my doctoral defense pending. My expertise includes computer vision, deep learning, image processing, and developing end-to-end AI solutions using Python, PyTorch, and TensorFlow.
+
+Throughout my research, I have developed and validated AI models for medical image segmentation, enhancement, reconstruction, and domain adaptation, with experience in GPU computing, Docker, and reproducible ML pipelines. I also have hands-on experience with Generative AI, retrieval-augmented generation (RAG), and AI agents using frameworks such as LangChain, ChromaDB, and the OpenAI SDK.
+
+I am passionate about transforming research into practical, reliable AI applications that solve real-world problems. I enjoy tackling technical challenges, learning new technologies, and collaborating with multidisciplinary teams to develop impactful solutions.
