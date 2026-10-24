@@ -27,10 +27,14 @@ def chat(message, history):
     return response.choices[0].message.content
 
 
+import os
+
 if __name__ == "__main__":
     demo = create_portfolio(chat)
 
     demo.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
         css=CSS,
         theme=gr.themes.Base(),
         footer_links=[]
