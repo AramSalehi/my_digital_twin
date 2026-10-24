@@ -8,3 +8,7 @@ my git hub repository is here
 https://github.com/AramSalehi
 also an emplemantaion of a rag system as a chat bot for a imaginary fitness gym is here :
 https://gymchatbot-ida4y5wyqfdpe7gc8esbyq.streamlit.app/
+and my google scholar is 
+https://scholar.google.com/citations?user=Ld2_2VEAAAAJ&hl=en
+you can find the list of papers there
+
