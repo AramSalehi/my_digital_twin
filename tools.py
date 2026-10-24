@@ -30,52 +30,67 @@ def record_user_details(
     summary="No summary provided"
 ):
     message = (
-        f"New Contact\n\n"
-        f"Name: {name}\n"
-        f"Email: {email}\n"
-        f"Notes: {notes}\n\n"
-        f"Conversation Summary:\n{summary}"
+        f"📩 New Contact\n\n"
+        f"👤 Name: {name}\n"
+        f"📧 Email: {email}\n"
+        f"📝 Notes: {notes}\n\n"
+        f"💬 Conversation Summary:\n{summary}"
     )
 
     push(message)
     return "OK"
 
-def record_unknown_question(question):
-    push(f"Recording {question} asked that I couldn't answer")
+
+def record_unknown_question(
+    question,
+    summary="No summary provided"
+):
+    message = (
+        f"❓ Unanswered Question\n\n"
+        f"Question: {question}\n\n"
+        f"💬 Conversation Summary:\n{summary}"
+    )
+
+    push(message)
     return "OK"
-
-
 
 record_user_details_json = {
     "name": "record_user_details",
     "description": (
-        "Record a user's contact information and send a "
-        "Telegram notification containing a summary "
-        "of the conversation."
+        "Use this tool when a visitor provides their email address "
+        "and wants to get in touch. Record their contact information "
+        "and provide a concise summary of the conversation so far."
     ),
     "parameters": {
         "type": "object",
         "properties": {
             "email": {
                 "type": "string",
-                "description": "The user's email address"
+                "description": "The visitor's email address."
             },
             "name": {
                 "type": "string",
-                "description": "The user's name"
+                "description": (
+                    "The visitor's name, if provided."
+                )
             },
             "notes": {
                 "type": "string",
-                "description": "Additional relevant information"
+                "description": (
+                    "Important information about the visitor, "
+                    "such as their interests, reason for contacting, "
+                    "or potential collaboration opportunities."
+                )
             },
             "summary": {
                 "type": "string",
                 "description": (
-                    "Summarize the conversation so far in "
-                    "3-5 sentences. Include the user's main "
-                    "questions, interests, goals, and any "
-                    "important follow-up actions. "
-                    "Do not invent information."
+                    "Provide a professional summary of the "
+                    "conversation so far in 3-5 sentences. "
+                    "Include the main topics discussed, "
+                    "the visitor's questions, interests, "
+                    "intentions, and any agreed next steps. "
+                    "Only include information actually discussed."
                 )
             }
         },
@@ -87,16 +102,39 @@ record_user_details_json = {
 
 record_unknown_question_json = {
     "name": "record_unknown_question",
-    "description": "Always use this tool to record any question that couldn't be answered as you didn't know the answer",
+    "description": (
+        "Always use this tool when a visitor asks a question "
+        "that you cannot answer confidently. Record the "
+        "unanswered question and summarize the conversation "
+        "to provide context for follow-up."
+    ),
     "parameters": {
         "type": "object",
         "properties": {
-            "question": {"type": "string", "description": "The question that couldn't be answered"},
+            "question": {
+                "type": "string",
+                "description": (
+                    "The exact question from the visitor "
+                    "that could not be answered."
+                )
+            },
+            "summary": {
+                "type": "string",
+                "description": (
+                    "Summarize the conversation so far in "
+                    "3-5 sentences. Include the main topics, "
+                    "relevant context surrounding the unanswered "
+                    "question, the visitor's interests, "
+                    "and any follow-up required. "
+                    "Do not invent missing information."
+                )
+            }
         },
-        "required": ["question"],
-        "additionalProperties": False,
-    },
+        "required": ["question", "summary"],
+        "additionalProperties": False
+    }
 }
+
 
 tools = [
     {"type": "function", "function": record_user_details_json},
@@ -107,6 +145,7 @@ tool_map = {
     "record_user_details": record_user_details,
     "record_unknown_question": record_unknown_question,
 }
+
 
 
 def handle_tool_calls(tool_calls):

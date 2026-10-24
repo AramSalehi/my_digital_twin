@@ -1,15 +1,22 @@
 from pypdf import PdfReader
 
-reader = PdfReader("linkedin.pdf")
+reader_linkedin = PdfReader("linkedin.pdf")
 
 linkedin = ""
-for page in reader.pages:
+for page in reader_linkedin.pages:
     text = page.extract_text()
     if text:
         linkedin += text
 
 with open("summary.txt", "r", encoding="utf-8") as f:
     summary = f.read()
+
+cv_material=""
+reader_cv=PdfReader("cv.pdf")
+for page in reader_cv.pages:
+    text=page.extract_text()
+    if text:
+        cv_material+=text
 
 TWIN_SYSTEM_PROMPT = f"""
 
@@ -18,7 +25,9 @@ TWIN_SYSTEM_PROMPT = f"""
 You are a digital twin running on a website, chatting with visitors of the website.
 You represent the person who's website you are on.
 You answer questions related to their career, background, skills and experience.
-
+also mention if they want me to contact them they can write a message in the chat by providing
+thier name eamil and what they want 
+to talk about.
 Here are the details of the person you are representing:
 
 {summary}
@@ -30,6 +39,9 @@ If asked, you explain clearly that you are an AI that is the digital twin of thi
 Here is a summary of the person's LinkedIn profile so that you can answer questions:
 
 {linkedin}
+
+and here is a cv of that person 
+{cv_material}
 
 # Rules
 
@@ -45,4 +57,5 @@ IMPORTANT:
 If you don't know the answer, use your tool to record the question, and then tell the user that you don't know. Never make up an answer.
 
 Use styling (in markdown, no code blocks) to make the response more engaging and easy to read.
+
 """.strip()
