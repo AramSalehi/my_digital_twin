@@ -231,6 +231,60 @@ html, body, gradio-app {
  .dt-section{padding:22px 17px;min-height:350px;}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
+
+/* Keep the Digital Twin chat readable in light and dark mode */
+
+:root,
+body,
+body.dark,
+gradio-app {
+    color-scheme: dark !important;
+}
+
+/* Chat background */
+#dt-chatbot,
+#dt-chatbot .bubble-wrap,
+#dt-chatbot .message-wrap {
+    background-color: #101d33 !important;
+    color: #f1f5ff !important;
+}
+
+/* Assistant messages */
+#dt-chatbot .message-row.bot-row .message,
+#dt-chatbot .message-row.bot-row .bubble,
+#dt-chatbot .message-row.bot-row .message-bubble,
+#dt-chatbot .message-row[data-role="assistant"] .message {
+    background: #20304b !important;
+    color: #f1f5ff !important;
+}
+
+/* User messages */
+#dt-chatbot .message-row.user-row .message,
+#dt-chatbot .message-row.user-row .bubble,
+#dt-chatbot .message-row.user-row .message-bubble,
+#dt-chatbot .message-row[data-role="user"] .message {
+    background: #236fba !important;
+    color: #ffffff !important;
+}
+
+/* Text inside messages */
+#dt-chatbot .message-row .message *,
+#dt-chatbot .message-row .bubble *,
+#dt-chatbot .message-row .message-bubble * {
+    color: inherit !important;
+}
+
+/* Input field */
+#dt-message textarea,
+#dt-message input {
+    color: #f1f5ff !important;
+    background: transparent !important;
+}
+
+/* Keep links visible */
+#dt-chatbot .message-row a {
+    color: #ffc857 !important;
+}
 """.replace("__BACKGROUND__", _background_data_uri())
 
 
